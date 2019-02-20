@@ -19,7 +19,7 @@ class VP2Fragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         val position = arguments?.getInt("position") ?: 0
         val bgColorRes = if (position % 2 == 0) R.color.colorAccent else android.R.color.holo_green_light
-        name_tv.text = "Fragment $position"
+        name_tv.text = "Fragment ${position + 1}"
         name_tv.setBackgroundColor(ContextCompat.getColor(context ?: return, bgColorRes))
     }
 }

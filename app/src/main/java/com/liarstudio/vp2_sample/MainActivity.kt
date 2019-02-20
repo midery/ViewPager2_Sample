@@ -12,17 +12,26 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val items = mutableListOf(0, 1, 2)
         adapter = VP2Adapter(supportFragmentManager) { counter_tv.text = "Fragments count: $it" }
-            .apply { count = 10 }
+            .apply { this.items = items }
 
         main_pager.adapter = adapter
 
         add_btn.setOnClickListener {
-            adapter.count++
+            items.addAfter(main_pager.currentItem, items.size)
+            adapter.items = items
         }
 
         delete_btn.setOnClickListener {
-            adapter.count--
+            if (items.size > 0) {
+                items.removeAt(main_pager.currentItem)
+                adapter.items = items
+            }
         }
+    }
+
+    private fun <T> MutableList<T>.addAfter(position: Int, element: T) {
+        if (size == 0 || position == size) add(element) else add(position + 1, element)
     }
 }
