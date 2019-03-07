@@ -1,18 +1,18 @@
 package com.liarstudio.vp2_sample
 
+import android.graphics.LinearGradient
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.viewpager2.adapter.FragmentStateAdapter
 
-class VP2Adapter(fm: FragmentManager, private val countChangeAction: (newCount: Int) -> Unit) :
+class VP2Adapter(fm: FragmentManager) :
     FragmentStateAdapter(fm) {
 
     var items = emptyList<Int>()
         set(value) {
             field = value
             notifyDataSetChanged()
-            countChangeAction(items.size)
         }
 
     override fun getItem(position: Int): Fragment {

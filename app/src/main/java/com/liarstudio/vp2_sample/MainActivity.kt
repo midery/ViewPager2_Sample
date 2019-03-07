@@ -4,7 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.viewpager2.widget.ViewPager2
-import com.liarstudio.vp2_sample.controller.EasyController
+import com.liarstudio.vp2_sample.controller.PositionController
+import com.liarstudio.vp2_sample.controller.StubItemController
 import kotlinx.android.synthetic.main.activity_main.*
 import ru.surfstudio.android.easyadapter.EasyAdapter
 import ru.surfstudio.android.easyadapter.ItemList
@@ -13,7 +14,9 @@ class MainActivity : AppCompatActivity() {
 
 //    private lateinit var adapter: VP2Adapter
 
-    private val easyController = EasyController()
+    private val positionController = PositionController()
+    private val loadingController = StubItemController()
+
     val items = mutableListOf(0, 1, 2)
 
     val adapter = EasyAdapter()
@@ -31,9 +34,13 @@ class MainActivity : AppCompatActivity() {
         main_pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 Log.d("111111", "page selected: $position")
+                if (position == items.size - 1) {
+                    main_pager.post { renderItems(isLoading = true) }
+                    main_pager.postDelayed(::loadNewItems, 2000L)
+                }
             }
         })
-        adapter.setItems(makeItems())
+        renderItems()
 
         add_btn.setOnClickListener {
             addAfterCurrent()
@@ -50,20 +57,29 @@ class MainActivity : AppCompatActivity() {
         val position = main_pager.currentItem
         val size = items.size
         if (size == 0 || position == size) items.add(size) else items.add(position + 1, size)
-        adapter.setItems(makeItems())
+        renderItems()
     }
 
     private fun deleteCurrent() {
         if (items.size > 0) {
             val position = main_pager.currentItem
             items.removeAt(position)
-            adapter.setItems(makeItems())
+            renderItems()
             if (position > 0) {
                 main_pager.setCurrentItem(if (position == items.size) position - 1 else position, false)
             }
         }
     }
 
-    private fun makeItems(): ItemList = ItemList.create()
-        .addAll(items, easyController)
+    private fun renderItems(isLoading: Boolean = false) {
+        val itemList = ItemList.create()
+            .addAll(items, positionController)
+            .addIf(isLoading, loadingController)
+        adapter.setItems(itemList)
+    }
+
+    private fun loadNewItems() {
+        repeat(5) { items.add(items.size) }
+        renderItems()
+    }
 }

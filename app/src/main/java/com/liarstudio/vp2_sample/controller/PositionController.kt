@@ -7,7 +7,7 @@ import com.liarstudio.vp2_sample.R
 import ru.surfstudio.android.easyadapter.controller.BindableItemController
 import ru.surfstudio.android.easyadapter.holder.BindableViewHolder
 
-class EasyController : BindableItemController<Int, EasyController.Holder>() {
+class PositionController : BindableItemController<Int, PositionController.Holder>() {
     override fun getItemId(position: Int) = position.toString()
 
     override fun createViewHolder(parent: ViewGroup) = Holder(parent)
