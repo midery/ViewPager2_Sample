@@ -12,15 +12,13 @@ class PositionController : BindableItemController<Int, PositionController.Holder
 
     override fun createViewHolder(parent: ViewGroup) = Holder(parent)
 
-    inner class Holder(parent: ViewGroup) : BindableViewHolder<Int>(parent, R.layout.layout_vp2) {
+    inner class Holder(parent: ViewGroup) : BindableViewHolder<Int>(parent, R.layout.layout_position) {
 
         override fun bind(position: Int) {
-            (itemView as TextView).text = "View $position"
-            val color = ContextCompat.getColor(
-                itemView.context,
-                if (adapterPosition % 2 == 0) R.color.colorAccent else R.color.colorPrimary
-            )
-            itemView.setBackgroundColor(color)
+            val title = "Element $position"
+            (itemView as TextView).text = title
+            val bgColorRes = if (adapterPosition % 2 == 0) R.color.colorAccent else R.color.colorPrimary
+            itemView.setBackgroundColor(ContextCompat.getColor(itemView.context, bgColorRes))
         }
     }
 }
