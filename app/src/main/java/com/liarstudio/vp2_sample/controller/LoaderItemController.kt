@@ -12,5 +12,5 @@ class LoaderItemController : NoDataItemController<LoaderItemController.Holder>()
 
     override fun createViewHolder(parent: ViewGroup) = Holder(parent)
 
-    inner class Holder(parent: ViewGroup) : BaseViewHolder(parent, R.layout.layout_stub)
+    inner class Holder(parent: ViewGroup) : BaseViewHolder(parent, R.layout.layout_loader)
 }

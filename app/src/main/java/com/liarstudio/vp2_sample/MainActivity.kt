@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
     private val loadingController = LoaderItemController()
 
     private val adapter = EasyAdapter()
+        .apply { setFirstInvisibleItemEnabled(false) }
 
     private val items = mutableListOf("0", "1", "2")
     private var isPageLoading = false
