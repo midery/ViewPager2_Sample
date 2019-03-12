@@ -5,7 +5,10 @@ import com.liarstudio.vp2_sample.R
 import ru.surfstudio.android.easyadapter.controller.NoDataItemController
 import ru.surfstudio.android.easyadapter.holder.BaseViewHolder
 
-class StubItemController : NoDataItemController<StubItemController.Holder>() {
+/**
+ * Controller for stub element to display progress bar during the loading of new page
+ */
+class LoaderItemController : NoDataItemController<LoaderItemController.Holder>() {
 
     override fun createViewHolder(parent: ViewGroup) = Holder(parent)
 
